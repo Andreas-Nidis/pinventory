@@ -19,11 +19,11 @@ function ProductCard({product}) {
 
       <div className='card-body'>
         {/* Product Information */}
-        <h2 className='card-title text-lg font-semibold pl-4 pt-2'>{product.name}</h2>
-        <p className='text-2xl font-bold text-primary pl-4'>${Number(product.price).toFixed(2)}</p>
+        <h2 className='card-title text-lg font-semibold'>{product.name}</h2>
+        <p className='text-2xl font-bold text-primary'>${Number(product.price).toFixed(2)}</p>
 
         {/* Card Actions */}
-        <div className='flex card-actions justify-end mt-4 p-2'>
+        <div className='flex card-actions justify-end'>
           <Link to={`/product/${product.id}`} className='pr-2 btn btn-sm btn-info btn-outline'>
             <EditIcon className='size-5' />
           </Link>
