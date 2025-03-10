@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useProductStore } from '../store/useProductStore.js';
 import {PlusCircleIcon, RefreshCwIcon} from 'lucide-react';
+import ProductCard from '../components/ProductCard.jsx';
 
 
 function Homepage() {
