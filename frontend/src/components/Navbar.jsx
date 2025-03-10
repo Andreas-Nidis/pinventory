@@ -12,15 +12,17 @@ function Navbar() {
         <div className='navbar px-16 min-h-[4rem] flex items-center'>
           {/* Logo */}
           <div className='flex-1 lg:flex-none'>
-            <Link to='/' className='hover:opacity-80 transition-opactiy' />
+            <Link to='/' className='hover:opacity-80 transition-opactiy'>
 
-            <div className='flex justify-start gap-2 items-center'>
-              <ShoppingCartIcon className='size-8' />
+              <div className='flex justify-start gap-2 items-center'>
+                <ShoppingCartIcon className='size-8' />
 
-              <span className='font-semibold font-mono tracking-widest text-2xl'>
-                PORTSTORE
-              </span>
-            </div>
+                <span className='font-semibold font-mono tracking-widest text-2xl'>
+                  PORTSTORE
+                </span>
+            
+              </div>
+            </Link>
 
           </div>
 

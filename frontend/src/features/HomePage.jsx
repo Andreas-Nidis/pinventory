@@ -16,7 +16,7 @@ function Homepage() {
   return (
     <main className='max-w-6xl mx-auto px-4 py-8'>
       <div className='flex justify-between items-center mb-8'>
-        <button className='btn btn-primary'>
+        <button className='flex btn btn-primary'>
           <PlusCircleIcon className='size-5 mr-2'/>
           Add Product
         </button>
@@ -38,7 +38,7 @@ function Homepage() {
           ))}
 
         </div>
-      )};
+      )}
     </main>
   )
 }
