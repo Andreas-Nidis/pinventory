@@ -1,4 +1,5 @@
 import { sql } from "../config/db.js";
+import { uploadAndGetURL } from "../config/cloudinary.js";
 
 
 //CRUD OPERATIONS
@@ -19,11 +20,19 @@ export const getProducts = async (req, res) => {
 };
 
 export const createProduct = async (req, res) => {
-    const {name, price, image} = req.body;
+    const {name, price } = req.body;
+    const imageFile  = req.file;
 
-    if (!name || !price || !image) {
+    if (!name || !price || !imageFile) {
         return res.status(400).json({success:false, message:"All fields are required"});
     }
+
+    const fileBase64 = req.file.buffer.toString("base64");
+    const fileDataUri = `data:${req.file.mimetype};base64,${fileBase64}`;
+
+    const image = await uploadAndGetURL(fileDataUri);
+
+    console.log("Image url retrieved successfully");
 
     try {
         const newProduct = await sql`
@@ -59,7 +68,7 @@ export const getProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
     const {id} = req.params;
-    const {name, price, image} = req.body;
+    const {name, price} = req.body;
 
     try {
         const updatedProduct = await sql`
