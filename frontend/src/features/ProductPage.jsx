@@ -107,11 +107,10 @@ function ProductPage() {
                   <span className='label-text text-base font-medium'>Image URL</span>
                 </label>
                 <input 
-                  type='text'
-                  placeholder='https://example.com/image.png'
-                  className='input input-bordered w-full'
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                  type='file' 
+                  accept='image/*'
+                  className='input input-bordered w-full py-2 focus:input-primary transition-colors duration-200' 
+                  onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })} 
                 />
               </div>
 

@@ -18,7 +18,7 @@ function Navbar() {
                 <ShoppingCartIcon className='size-8' />
 
                 <span className='font-semibold font-mono tracking-widest text-2xl'>
-                  PORTSTORE
+                  PINVENTORY
                 </span>
             
               </div>
