@@ -67,11 +67,10 @@ function AddProductModal() {
                                 <ImageIcon className='size-5' />
                             </div>
                             <input 
-                                type='text' 
-                                placeholder='https://example.com/image.jpg' 
-                                className='input input-bordered w-full pl-10 py-3 focus:input-primary transition-colors duration-200' 
-                                value={formData.image} 
-                                onChange={(e) => setFormData({ ...formData, image: e.target.value })} 
+                                type='file' 
+                                accept='image/*'
+                                className='input input-bordered w-full pl-10 py-2 focus:input-primary transition-colors duration-200' 
+                                onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })} 
                             />
                         </div>
                     </div>

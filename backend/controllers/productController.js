@@ -69,6 +69,14 @@ export const getProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     const {id} = req.params;
     const {name, price} = req.body;
+    
+
+    const fileBase64 = req.file.buffer.toString("base64");
+    const fileDataUri = `data:${req.file.mimetype};base64,${fileBase64}`;
+
+    const image = await uploadAndGetURL(fileDataUri);
+
+    console.log("Image url retrieved successfully");
 
     try {
         const updatedProduct = await sql`

@@ -27,7 +27,16 @@ export const useProductStore = create((set, get) => ({
 
         try {
             const { formData } = get();
-            await axios.post(`${BASE_URL}/api/products`, formData);
+
+            const formDataToSend = new FormData();
+            formDataToSend.append("name", formData.name);
+            formDataToSend.append("price", formData.price);
+            formDataToSend.append("imageFile", formData.image);
+
+            await axios.post(`${BASE_URL}/api/products`, formDataToSend, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
+            
             await get().fetchProducts();
             get().resetForm();
             toast.success("Product added successfully");
