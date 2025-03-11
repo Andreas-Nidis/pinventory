@@ -1,6 +1,6 @@
 import { sql } from "../config/db.js";
 import { uploadAndGetURL } from "../config/cloudinary.js";
-
+import { v2 as cloudinary } from "cloudinary";
 
 //CRUD OPERATIONS
 export const getProducts = async (req, res) => {
@@ -104,8 +104,40 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     const { id } = req.params;
-
+    
     try {
+        const product = await sql`SELECT * FROM products WHERE id = ${id}`;
+
+        if (product.length === 0) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        const imageUrl = product[0].image; // Stored Cloudinary image URL
+        if (imageUrl) {
+            console.log("Deleting from Cloudinary...");
+            
+            const publicId = imageUrl
+                .split('/upload/')[1]  // Get everything after '/upload/'
+                .split('.')[0]         // Get everything before the file extension (jpg, png, etc.)
+                .split('?')[0];        // Remove any query parameters
+
+            console.log("Extracted public_id:", publicId);
+        
+            try {
+                // Delete the image from Cloudinary using the correct public_id
+                const result = await cloudinary.uploader.destroy(publicId);
+                console.log("Cloudinary delete result:", result);
+        
+                if (result.result === 'ok') {
+                    console.log(`Successfully deleted image with public_id: ${publicId}`);
+                } else {
+                    console.log(`Failed to delete image: ${publicId}`);
+                }
+            } catch (error) {
+                console.log("Error during Cloudinary deletion:", error); // Log the full error
+            }
+        }
+
         const deletedProduct = await sql`
             DELETE FROM products WHERE id=${id} RETURNING *
         `;
