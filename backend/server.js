@@ -6,60 +6,18 @@ import dotenv from "dotenv";
 import { sql } from "./config/db.js";
 
 import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import { aj } from "./lib/arcjet.js";
-
-import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import session from "express-session";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(session({ secret: process.env.SESSION_SECRET }))
-app.use(passport.initialize());
-app.use(passport.session());
-
-
 app.use(express.json()); //Herlps parse incoming data 
 app.use(cors()); //Avoid cors errors
 app.use(helmet()); //Helmet is a security middleware that helps protect your application by setting HTTP headers.
 app.use(morgan("dev")); //This will log requests
-
-
-passport.use(
-    new GoogleStrategy(
-        {
-            clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: "/auth/google/callback",
-        },
-        async(accessToken, refreshToken, profile, done) => {
-            const user = await findOrCreateUser(profile);
-            return done(null, user);
-        }
-    )
-);
-
-passport.serializeUser((user, done) => done(null, user.id));
-passport.deserializeUser((id, done) => {
-    const user = getUserById(id);
-    done(null, user);
-}) 
-
-app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-
-app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/" }), (req, res) => {
-    res.redirect("/dashboard");
-});
-
-app.get("/logout", (req, res) => {
-    req.logout(() => {
-        res.redirect("/");
-    })
-})
-
 
 //Implementation of arcjet rate-limit to all routes
 app.use(async (req, res, next) => {
@@ -93,12 +51,14 @@ app.use(async (req, res, next) => {
 });
 
 app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
 
 async function initDB() {
     try {
         await sql`
             CREATE TABLE IF NOT EXISTS products (
                 id SERIAL PRIMARY KEY,
+                user_id VARCHAR(255) NOT NULL,
                 name VARCHAR(255) NOT NULL,
                 image VARCHAR(255) NOT NULL,
                 price DECIMAL(10, 2) NOT NULL,

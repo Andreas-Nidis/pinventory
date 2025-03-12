@@ -7,6 +7,7 @@ export const getProducts = async (req, res) => {
     try {
         const products = await sql`
             SELECT * FROM products
+            WHERE user_id = ${req.user.sub}
             ORDER BY created_at DESC
         `;
 
@@ -36,8 +37,8 @@ export const createProduct = async (req, res) => {
 
     try {
         const newProduct = await sql`
-            INSERT INTO products(name, price, image)
-            VALUES (${name}, ${price}, ${image})
+            INSERT INTO products(user_id, name, price, image)
+            VALUES (${req.user.sub}, ${name}, ${price}, ${image})
             RETURNING *
         `
 
@@ -55,8 +56,15 @@ export const getProduct = async (req, res) => {
 
     try {
         const product = await sql`
-            SELECT * FROM products WHERE id=${id}
+            SELECT * FROM products WHERE id=${id} AND user_id=${req.user.sub}
         `;
+
+        if(product.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found",
+            });
+        }
 
         res.status(200).json({success:true, data: product[0]});
     } catch (error) {
@@ -70,7 +78,6 @@ export const updateProduct = async (req, res) => {
     const {id} = req.params;
     const {name, price} = req.body;
     
-
     const fileBase64 = req.file.buffer.toString("base64");
     const fileDataUri = `data:${req.file.mimetype};base64,${fileBase64}`;
 
@@ -82,7 +89,7 @@ export const updateProduct = async (req, res) => {
         const updatedProduct = await sql`
             UPDATE products
             SET name=${name}, price=${price}, image=${image}
-            WHERE id=${id}
+            WHERE id=${id} AND user_id=${req.user.sub}
             RETURNING *
         `;
 
@@ -106,7 +113,7 @@ export const deleteProduct = async (req, res) => {
     const { id } = req.params;
     
     try {
-        const product = await sql`SELECT * FROM products WHERE id = ${id}`;
+        const product = await sql`SELECT * FROM products WHERE id = ${id} AND user_id = ${req.user.sub}`;
 
         if (product.length === 0) {
             return res.status(404).json({ success: false, message: "Product not found" });
@@ -139,7 +146,9 @@ export const deleteProduct = async (req, res) => {
         }
 
         const deletedProduct = await sql`
-            DELETE FROM products WHERE id=${id} RETURNING *
+            DELETE FROM products 
+            WHERE id=${id} AND user_id = ${req.user.sub} 
+            RETURNING *
         `;
 
         if(deletedProduct.length === 0) {
