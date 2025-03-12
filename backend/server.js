@@ -60,6 +60,7 @@ app.get("/logout", (req, res) => {
     })
 })
 
+
 //Implementation of arcjet rate-limit to all routes
 app.use(async (req, res, next) => {
     try {
