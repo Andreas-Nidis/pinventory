@@ -78,16 +78,20 @@ export const updateProduct = async (req, res) => {
     const {id} = req.params;
     const {name, price} = req.body;
     let image;
-
-    const fileBase64 = req.file.buffer.toString("base64");
-    const fileDataUri = `data:${req.file.mimetype};base64,${fileBase64}`;
-
-    const newImage = await uploadAndGetURL(fileDataUri);
+    let newImage;
 
     const storedImage = await sql`
         SELECT image FROM products WHERE id=${id} AND user_id=${req.user.sub}
     `;
-    
+
+    if (req.file) {
+        const fileBase64 = req.file.buffer.toString("base64");
+        const fileDataUri = `data:${req.file.mimetype};base64,${fileBase64}`;
+
+        newImage = await uploadAndGetURL(fileDataUri);
+    } else {
+        newImage = storedImage[0].image;
+    }
 
     if(newImage === storedImage[0].image) {
         console.log('Image url already in use'); 
