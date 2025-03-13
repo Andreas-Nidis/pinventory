@@ -42,8 +42,12 @@ function GoogleSignIn() {
     }, [handleCredentialResponse]);
 
     return (
-        <div ref={googleButtonRef}></div>
-    )
+        <div className='flex flex-col justify-center items-center h-screen'>
+            <h1 className='text-4xl font-bold m-1'>Welcome to Pinventory!</h1>
+            <p className='text-lg m-2'>Please sign in with Google to continue :D</p>
+            <div className='' ref={googleButtonRef}></div>
+        </div>
+    )   
 }
 
 export default GoogleSignIn
