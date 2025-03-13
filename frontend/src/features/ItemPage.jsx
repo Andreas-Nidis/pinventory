@@ -85,19 +85,36 @@ function ItemPage() {
                 />
               </div>
 
-              {/* Item Price */}
+              {/* Item Description */}
               <div className='form-control'>
                 <label className='label'>
-                  <span className='label-text text-base font-medium'>Item Price</span>
+                  <span className='label-text text-base font-medium'>Item Description</span>
+                  <span className='label-text-alt text-base-content/50 font-light'>(optional)</span>
+                </label>
+                <input 
+                  type='text'
+                  
+                  placeholder='Enter item description (e.g. location, history, significance, etc.)'
+                  className='input input-bordered w-full'
+                  value={formData.description ?? ""}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                />
+              </div>
+
+              {/* Item Value */}
+              <div className='form-control'>
+                <label className='label'>
+                  <span className='label-text text-base font-medium'>Item Value</span>
+                  <span className='label-text-alt text-base-content/50 font-light'>(optional)</span>
                 </label>
                 <input 
                   type='number'
                   min='0'
                   step='0.01'
-                  placeholder='Enter item price'
+                  placeholder='Enter item value'
                   className='input input-bordered w-full'
-                  value={formData.price}
-                  onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                  value={formData.value}
+                  onChange={(e) => setFormData({ ...formData, value: e.target.value })}
                 />
               </div>
 
@@ -124,7 +141,7 @@ function ItemPage() {
                 <button 
                   type='submit'
                   className='btn btn-primary'
-                  disabled={loading || !formData.name || !formData.price || !formData.image}
+                  disabled={loading || !formData.name || !formData.image}
                 >
                   {loading ? (
                     <span className='loading loading-spinner loading-sm' />

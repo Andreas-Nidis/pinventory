@@ -36,10 +36,31 @@ function AddItemModal() {
                         </div>
                     </div>
 
-                    {/* Price */}
+                    {/* Description */}
                     <div className='form-control'>
                         <label className='label'>
-                            <span className='label-text text-base font-medium'>Price</span>
+                            <span className='label-text text-base font-medium'>Item Description</span>
+                            <span className='label-text-alt text-base-content/50 font-light'>(optional)</span>
+                        </label>
+                        <div className='relative'>
+                            <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/50'>
+                                <Package2Icon className='size-5' />
+                            </div>
+                            <input 
+                                type='text' 
+                                placeholder='Enter item description (e.g. location, significance, etc.)'
+                                className='input input-bordered w-full pl-10 py-3 focus:input-primary transition-colors duration-200' 
+                                value={formData.description ?? ""}
+                                onChange={(e) => setFormData({ ...formData, description: e.target.value })} 
+                            />
+                        </div>
+                    </div>
+
+                    {/* Value */}
+                    <div className='form-control'>
+                        <label className='label'>
+                            <span className='label-text text-base font-medium'>Estimated Value</span>
+                            <span className='label-text-alt text-base-content/50 font-light'>(optional)</span>
                         </label>
                         <div className='relative'>
                             <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/50'>
@@ -51,8 +72,8 @@ function AddItemModal() {
                                 step="0.01"
                                 placeholder='0.00' 
                                 className='input input-bordered w-full pl-10 py-3 focus:input-primary transition-colors duration-200' 
-                                value={formData.price} 
-                                onChange={(e) => setFormData({ ...formData, price: e.target.value })} 
+                                value={formData.value} 
+                                onChange={(e) => setFormData({ ...formData, value: e.target.value })} 
                             />
                         </div>
                     </div>
@@ -88,7 +109,7 @@ function AddItemModal() {
                     <button 
                         type='submit'
                         className='btn btn-primary min-w-[120px]'
-                        disabled={!formData.name || !formData.price || !formData.image || loading}
+                        disabled={!formData.name || !formData.image || loading}
                     >
                         {loading ? (
                             <span className='loading loading-spinner loading-sm' />

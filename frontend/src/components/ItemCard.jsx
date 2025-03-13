@@ -20,8 +20,13 @@ function ItemCard({item}) {
       <div className='card-body'>
         {/* Item Information */}
         <h2 className='card-title text-lg font-semibold'>{item.name}</h2>
-        <p className='text-2xl font-bold text-primary'>${Number(item.price).toFixed(2)}</p>
-
+        <p className='card-title text-sm font-semibold'>{item.description}</p>
+        {Number(item.value).toFixed(2) === "0.00" ?
+          ""
+          :
+          <p className='text-2xl font-bold text-primary'>${Number(item.value).toFixed(2)}</p>
+        }
+        
         {/* Card Actions */}
         <div className='flex card-actions justify-end'>
           <Link to={`/item/${item.id}`} className='pr-2 btn btn-sm btn-info btn-outline'>

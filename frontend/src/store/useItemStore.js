@@ -14,12 +14,13 @@ export const useItemStore = create((set, get) => ({
     //Form state
     formData: {
         name: "",
-        price: "",
+        description: "",
+        value: "0.00",
         image: "",
     },
 
     setFormData: (formData) => set({ formData }),
-    resetForm: () => set({ formData: { name: "", price: "", image: "" }}),
+    resetForm: () => set({ formData: { name: "", description: "", value: "0.00", image: "" }}),
     
     addItem: async(e) => {
         e.preventDefault();
@@ -31,7 +32,8 @@ export const useItemStore = create((set, get) => ({
 
             const formDataToSend = new FormData();
             formDataToSend.append("name", formData.name);
-            formDataToSend.append("price", formData.price);
+            formDataToSend.append("description", formData.description);
+            formDataToSend.append("value", formData.value);
             formDataToSend.append("imageFile", formData.image);
 
             await axios.post(`${BASE_URL}/api/items`, formDataToSend, {
@@ -57,7 +59,6 @@ export const useItemStore = create((set, get) => ({
         set({loading:true});
         try {
             const token = localStorage.getItem('token');
-            // console.log("Token", token);
             const response = await axios.get(`${BASE_URL}/api/items`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
@@ -115,7 +116,8 @@ export const useItemStore = create((set, get) => ({
 
             const formDataToSend = new FormData();
             formDataToSend.append("name", formData.name);
-            formDataToSend.append("price", formData.price);
+            formDataToSend.append("description", formData.description);
+            formDataToSend.append("value", formData.value);
             formDataToSend.append("imageFile", formData.image);
 
             const response = await axios.put(`${BASE_URL}/api/items/${id}`, formDataToSend, {

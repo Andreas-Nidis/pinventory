@@ -60,8 +60,9 @@ async function initDB() {
                 id SERIAL PRIMARY KEY,
                 user_id VARCHAR(255) NOT NULL,
                 name VARCHAR(255) NOT NULL,
+                description VARCHAR(255),
                 image VARCHAR(255) NOT NULL,
-                price DECIMAL(10, 2) NOT NULL,
+                value DECIMAL(10, 2),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `;

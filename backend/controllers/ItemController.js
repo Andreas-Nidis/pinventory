@@ -21,10 +21,10 @@ export const getItems = async (req, res) => {
 };
 
 export const createItem = async (req, res) => {
-    const {name, price } = req.body;
+    const {name, description, value } = req.body;
     const imageFile  = req.file;
 
-    if (!name || !price || !imageFile) {
+    if (!name || !imageFile) {
         return res.status(400).json({success:false, message:"All fields are required"});
     }
 
@@ -37,8 +37,8 @@ export const createItem = async (req, res) => {
 
     try {
         const newItem = await sql`
-            INSERT INTO items(user_id, name, price, image)
-            VALUES (${req.user.sub}, ${name}, ${price}, ${image})
+            INSERT INTO items(user_id, name, description, value, image)
+            VALUES (${req.user.sub}, ${name}, ${description}, ${value}, ${image})
             RETURNING *
         `
 
@@ -76,7 +76,7 @@ export const getItem = async (req, res) => {
 
 export const updateItem = async (req, res) => {
     const {id} = req.params;
-    const {name, price} = req.body;
+    const {name, description, value} = req.body;
     let image;
     let newImage;
 
@@ -127,7 +127,7 @@ export const updateItem = async (req, res) => {
     try {
         const updatedItem = await sql`
             UPDATE items
-            SET name=${name}, price=${price}, image=${image}
+            SET name=${name}, description=${description}, value=${value}, image=${image}
             WHERE id=${id} AND user_id=${req.user.sub}
             RETURNING *
         `;
