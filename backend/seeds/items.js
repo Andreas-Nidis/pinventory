@@ -1,6 +1,6 @@
 import { sql } from "../config/db.js";
 
-const SAMPLE_PRODUCTS = [
+const SAMPLE_ITEMS = [
   {
     name: "Premium Wireless Headphones",
     price: 299.99,
@@ -54,13 +54,13 @@ const SAMPLE_PRODUCTS = [
 async function seedDatabase() {
   try {
     // first, clear existing data
-    await sql`TRUNCATE TABLE products RESTART IDENTITY`;
+    await sql`TRUNCATE TABLE items RESTART IDENTITY`;
 
-    // insert all products
-    for (const product of SAMPLE_PRODUCTS) {
+    // insert all items
+    for (const item of SAMPLE_ITEMS) {
       await sql`
-        INSERT INTO products (name, price, image)
-        VALUES (${product.name}, ${product.price}, ${product.image})
+        INSERT INTO items (name, price, image)
+        VALUES (${item.name}, ${item.price}, ${item.image})
       `;
     }
 
