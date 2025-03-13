@@ -3,7 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 //Dynamic BASE_URL depending on environment
-const BASE_URL = import.meta.env.MODE === "development" ? 'http://localhost:3000' : "";
+const BASE_URL = import.meta.env.MODE === "development" ? 'http://localhost:3000' : "https://pern-store-project.onrender.com";
 
 export const useItemStore = create((set, get) => ({
     //Items state
