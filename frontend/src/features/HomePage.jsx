@@ -18,8 +18,8 @@ function Homepage() {
     <main className='max-w-6xl mx-auto px-4 py-8'>
       <div className='flex justify-between items-center mb-8'>
         <button className='flex btn btn-primary' onClick={() => document.getElementById("add_product_modal").showModal()}>
-          <PlusCircleIcon className='size-5 mr-2'/>
-          Add Product
+          <PlusCircleIcon className='size-5 mr-1'/>
+          Add Item
         </button>
         <button className='btn btn-ghost btn-circle' onClick={fetchProducts}>
           <RefreshCwIcon className='size-5' />

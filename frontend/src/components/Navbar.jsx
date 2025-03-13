@@ -41,7 +41,7 @@ function Navbar() {
                   <div className='p-2 rounded-full hover:bg-base-200 flex'>
                     <SquareStack className='size-5'/>
                     <span className='px-2 hidden lg:block'>Items:</span>
-                    <div className=''>
+                    <div>
                       <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">{products.length}</span>
                     </div>
                   </div>
