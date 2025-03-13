@@ -1,11 +1,13 @@
 import React from 'react'
-import { Link, useResolvedPath, useNavigate } from 'react-router-dom';
-import { ShoppingCartIcon, ShoppingBagIcon, LogOutIcon } from "lucide-react";
+import { useResolvedPath, useNavigate } from 'react-router-dom';
+import { PackageOpen, SquareStack, LogOutIcon } from "lucide-react";
+import { useProductStore } from '../store/useProductStore';
 
 function Navbar() {
   const {pathname} = useResolvedPath();
   const isHomePage = pathname === '/';
   const navigate = useNavigate();
+  const { products } = useProductStore();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -18,17 +20,15 @@ function Navbar() {
         <div className='navbar px-4 min-h-[4rem] flex items-center'>
           {/* Logo */}
           <div className='flex-1 lg:flex-none'>
-            {/* <Link to='/' className='hover:opacity-80 transition-opactiy'> */}
 
-              <div className='flex justify-start gap-2 items-center'>
-                <ShoppingCartIcon className='size-8' />
+            <div className='flex justify-start gap-2 items-center'>
+              <PackageOpen className='size-8' />
 
-                <span className='font-semibold font-mono tracking-widest text-2xl'>
-                  PINVENTORY
-                </span>
-            
-              </div>
-            {/* </Link> */}
+              <span className='font-semibold font-mono tracking-widest text-2xl'>
+                PINVENTORY
+              </span>
+          
+            </div>
 
           </div>
 
@@ -39,9 +39,10 @@ function Navbar() {
               <>
                 <div className='indicator'>
                   <div className='p-2 rounded-full hover:bg-base-200 flex'>
-                    <ShoppingBagIcon className='size-5'/>
-                    <div className='-translate-y-3'>
-                      <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">8{/* {products.length} */}</span>
+                    <SquareStack className='size-5'/>
+                    <span className='px-2 hidden lg:block'>Items:</span>
+                    <div className=''>
+                      <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">{products.length}</span>
                     </div>
                   </div>
                 </div>
