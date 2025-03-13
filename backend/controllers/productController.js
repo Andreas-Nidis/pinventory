@@ -77,12 +77,47 @@ export const getProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     const {id} = req.params;
     const {name, price} = req.body;
-    
+    let image;
+
     const fileBase64 = req.file.buffer.toString("base64");
     const fileDataUri = `data:${req.file.mimetype};base64,${fileBase64}`;
 
-    const image = await uploadAndGetURL(fileDataUri);
+    const newImage = await uploadAndGetURL(fileDataUri);
 
+    const storedImage = await sql`
+        SELECT image FROM products WHERE id=${id} AND user_id=${req.user.sub}
+    `;
+    
+
+    if(newImage === storedImage[0].image) {
+        console.log('Image url already in use'); 
+        image = storedImage[0].image;
+    } else {
+        image = newImage;
+
+        console.log("Deleting old image from Cloudinary...");
+        const publicId = storedImage[0].image
+        .split('/upload/')[1]  // Get everything after '/upload/'
+        .split('.')[0]         // Get everything before the file extension (jpg, png, etc.)
+        .split('?')[0];        // Remove any query parameters
+
+        console.log("Extracted public_id:", publicId);
+
+        try {
+            // Delete the image from Cloudinary using the correct public_id
+            const result = await cloudinary.uploader.destroy(publicId);
+            console.log("Cloudinary delete result:", result);
+
+            if (result.result === 'ok') {
+                console.log(`Successfully deleted image with public_id: ${publicId}`);
+            } else {
+                console.log(`Failed to delete image: ${publicId}`);
+            }
+        } catch (error) {
+            console.log("Error during Cloudinary deletion:", error); // Log the full error
+        }
+    }
+    
     console.log("Image url retrieved successfully");
 
     try {

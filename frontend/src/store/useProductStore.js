@@ -27,6 +27,7 @@ export const useProductStore = create((set, get) => ({
 
         try {
             const { formData } = get();
+            const token = localStorage.getItem('token');
 
             const formDataToSend = new FormData();
             formDataToSend.append("name", formData.name);
@@ -34,7 +35,10 @@ export const useProductStore = create((set, get) => ({
             formDataToSend.append("imageFile", formData.image);
 
             await axios.post(`${BASE_URL}/api/products`, formDataToSend, {
-                headers: { "Content-Type": "multipart/form-data" }
+                headers: { 
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             await get().fetchProducts();
@@ -52,7 +56,11 @@ export const useProductStore = create((set, get) => ({
     fetchProducts: async () => {
         set({loading:true});
         try {
-            const response = await axios.get(`${BASE_URL}/api/products`);
+            const token = localStorage.getItem('token');
+            // console.log("Token", token);
+            const response = await axios.get(`${BASE_URL}/api/products`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
             set({products:response.data.data, error:null});
         } catch (err) {
             if (err.status === 429) set({error:"Rate Limit Exceeded", products:[]});
@@ -65,7 +73,10 @@ export const useProductStore = create((set, get) => ({
     deleteProduct: async (id) => {
         set({ loading: true });
         try {
-            await axios.delete(`${BASE_URL}/api/products/${id}`);
+            const token = localStorage.getItem('token');
+            await axios.delete(`${BASE_URL}/api/products/${id}`, {
+                headers: {"Authorization": `Bearer ${token}`}
+            });
             set(prev => ({ products: prev.products.filter(product => product.id !== id)}));
             toast.success("Product deleted successfully");
         } catch (error) {
@@ -79,7 +90,10 @@ export const useProductStore = create((set, get) => ({
     fetchProduct: async (id) => {
         set({ loading: true });
         try {
-            const response = await axios.get(`${BASE_URL}/api/products/${id}`);
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${BASE_URL}/api/products/${id}`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
             set({ 
                 currentProduct: response.data.data, 
                 formData: response.data.data, //Prefill form with current values 
@@ -97,6 +111,7 @@ export const useProductStore = create((set, get) => ({
         set({loading:true})
         try {
             const {formData} = get();
+            const token = localStorage.getItem('token');
 
             const formDataToSend = new FormData();
             formDataToSend.append("name", formData.name);
@@ -104,7 +119,10 @@ export const useProductStore = create((set, get) => ({
             formDataToSend.append("imageFile", formData.image);
 
             const response = await axios.put(`${BASE_URL}/api/products/${id}`, formDataToSend, {
-                headers: { "Content-Type": "multipart/form-data" }
+                headers: { 
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${token}`
+                }
             });
             set({ currentProduct: response.data.data});
             toast.success("Product updated successfully");
