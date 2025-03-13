@@ -3,6 +3,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
 import { sql } from "./config/db.js";
 
 import itemRoutes from "./routes/ItemRoutes.js";
@@ -13,10 +14,13 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const __dirname = path.resolve();
 
 app.use(express.json()); //Herlps parse incoming data 
 app.use(cors()); //Avoid cors errors
-app.use(helmet()); //Helmet is a security middleware that helps protect your application by setting HTTP headers.
+app.use(helmet({
+    contentSecurityPolicy: false,
+})); //Helmet is a security middleware that helps protect your application by setting HTTP headers.
 app.use(morgan("dev")); //This will log requests
 
 //Implementation of arcjet rate-limit to all routes
@@ -52,6 +56,15 @@ app.use(async (req, res, next) => {
 
 app.use("/api/items", itemRoutes);
 app.use("/api/users", userRoute);
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+    })
+}
+
 
 async function initDB() {
     try {
