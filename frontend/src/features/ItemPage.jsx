@@ -1,29 +1,29 @@
 import React, { useEffect } from 'react'
-import { useProductStore } from '../store/useProductStore'
+import { useItemStore } from '../store/useItemStore.js';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeftIcon, SaveIcon, Trash2Icon } from 'lucide-react';
 
-function ProductPage() {
+function ItemPage() {
   const {
-    currentProduct,
+    currentItem,
     formData,
     setFormData,
     loading,
     error,
-    fetchProduct,
-    updateProduct,
-    deleteProduct,
-  } = useProductStore();
+    fetchItem,
+    updateItem,
+    deleteItem,
+  } = useItemStore();
   const navigate = useNavigate();
   const {id} = useParams();
 
   useEffect(() => {
-    fetchProduct(id)
-  }, [fetchProduct, id])
+    fetchItem(id)
+  }, [fetchItem, id])
 
   const handleDelete = async () => {
     if(window.confirm("Are you sure you want to delete this item?")) {
-      await deleteProduct(id);
+      await deleteItem(id);
       navigate("/");
     }
   }
@@ -48,15 +48,15 @@ function ProductPage() {
     <div className='container mx-auto px-4 py-8 max-w-4xl'>
       <button onClick={() => navigate("/")} className='btn btn-ghost mb-8'>
         <ArrowLeftIcon className='size-4 mr-2' />
-        Back to Products
+        Back to Items
       </button>
 
       <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-        {/* Product Image */}
+        {/* Item Image */}
         <div className='rounded-lg overflow-hidden sha bg-base-100'>
           <img 
-            src={currentProduct?.image}
-            alt={currentProduct?.name}
+            src={currentItem?.image}
+            alt={currentItem?.name}
             className='size-full object-cover'
           />
         </div>
@@ -64,44 +64,44 @@ function ProductPage() {
         {/* Form */}
         <div className='card bg-base-100 shadow-lg'>
           <div className='card-body'>
-            <h2 className='card-title text-2xl mb-6'>Edit Product</h2>
+            <h2 className='card-title text-2xl mb-6'>Edit Item</h2>
 
             <form onSubmit={(e) => {
               e.preventDefault();
-              updateProduct(id);
+              updateItem(id);
             }} 
             className='space-y-6'>
-              {/* Product Name */}
+              {/* Item Name */}
               <div className='form-control'>
                 <label className='label'>
-                  <span className='label-text text-base font-medium'>Product Name</span>
+                  <span className='label-text text-base font-medium'>Item Name</span>
                 </label>
                 <input 
                   type='text'
-                  placeholder='Enter product name'
+                  placeholder='Enter item name'
                   className='input input-bordered w-full'
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
               </div>
 
-              {/* Product Price */}
+              {/* Item Price */}
               <div className='form-control'>
                 <label className='label'>
-                  <span className='label-text text-base font-medium'>Product Price</span>
+                  <span className='label-text text-base font-medium'>Item Price</span>
                 </label>
                 <input 
                   type='number'
                   min='0'
                   step='0.01'
-                  placeholder='Enter product price'
+                  placeholder='Enter item price'
                   className='input input-bordered w-full'
                   value={formData.price}
                   onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                 />
               </div>
 
-              {/* Product Image URL */}
+              {/* Item Image URL */}
               <div className='form-control'>
                 <label className='label'>
                   <span className='label-text text-base font-medium'>Image URL</span>
@@ -118,7 +118,7 @@ function ProductPage() {
               <div className='flex justify-between mt-8'>
                 <button type='button' onClick={handleDelete} className='btn btn-error'>
                   <Trash2Icon className='size-4 mr-2' />
-                  Delete Product
+                  Delete Item
                 </button>
 
                 <button 
@@ -145,4 +145,4 @@ function ProductPage() {
   )
 }
 
-export default ProductPage
+export default ItemPage

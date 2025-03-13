@@ -4,12 +4,12 @@ import toast from 'react-hot-toast';
 
 const BASE_URL = 'http://localhost:3000';
 
-export const useProductStore = create((set, get) => ({
-    //Products state
-    products: [],
+export const useItemStore = create((set, get) => ({
+    //Items state
+    items: [],
     loading: false,
     error: null,
-    currentProduct: null,
+    currentitem: null,
 
     //Form state
     formData: {
@@ -21,7 +21,7 @@ export const useProductStore = create((set, get) => ({
     setFormData: (formData) => set({ formData }),
     resetForm: () => set({ formData: { name: "", price: "", image: "" }}),
     
-    addProduct: async(e) => {
+    addItem: async(e) => {
         e.preventDefault();
         set({ loading: true });
 
@@ -34,80 +34,80 @@ export const useProductStore = create((set, get) => ({
             formDataToSend.append("price", formData.price);
             formDataToSend.append("imageFile", formData.image);
 
-            await axios.post(`${BASE_URL}/api/products`, formDataToSend, {
+            await axios.post(`${BASE_URL}/api/items`, formDataToSend, {
                 headers: { 
                     "Content-Type": "multipart/form-data",
                     "Authorization": `Bearer ${token}`
                 }
             });
 
-            await get().fetchProducts();
+            await get().fetchItems();
             get().resetForm();
-            toast.success("Product added successfully");
-            document.getElementById('add_product_modal').close();
+            toast.success("Item added successfully");
+            document.getElementById('add_item_modal').close();
         } catch (error) {
-            console.log("Error in addProduct function", error);
+            console.log("Error in addItem function", error);
             toast.error("Something went wrong");
         } finally {
             set({ loading: false });
         }
     },
 
-    fetchProducts: async () => {
+    fetchItems: async () => {
         set({loading:true});
         try {
             const token = localStorage.getItem('token');
             // console.log("Token", token);
-            const response = await axios.get(`${BASE_URL}/api/products`, {
+            const response = await axios.get(`${BASE_URL}/api/items`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
-            set({products:response.data.data, error:null});
+            set({items:response.data.data, error:null});
         } catch (err) {
-            if (err.status === 429) set({error:"Rate Limit Exceeded", products:[]});
-            else set({error:"Something went wrong", products:[]});
+            if (err.status === 429) set({error:"Rate Limit Exceeded", items:[]});
+            else set({error:"Something went wrong", items:[]});
         } finally {
             set({loading:false});
         }
     },
 
-    deleteProduct: async (id) => {
+    deleteItem: async (id) => {
         set({ loading: true });
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`${BASE_URL}/api/products/${id}`, {
+            await axios.delete(`${BASE_URL}/api/items/${id}`, {
                 headers: {"Authorization": `Bearer ${token}`}
             });
-            set(prev => ({ products: prev.products.filter(product => product.id !== id)}));
-            toast.success("Product deleted successfully");
+            set(prev => ({ items: prev.items.filter(item => item.id !== id)}));
+            toast.success("Item deleted successfully");
         } catch (error) {
-            console.log("Error in deleteProduct function", error);
+            console.log("Error in deleteItem function", error);
             toast.error("Something went wrong");
         } finally {
             set({ loading: false });
         }
     },
 
-    fetchProduct: async (id) => {
+    fetchItem: async (id) => {
         set({ loading: true });
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}/api/products/${id}`, {
+            const response = await axios.get(`${BASE_URL}/api/items/${id}`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             set({ 
-                currentProduct: response.data.data, 
+                currentItem: response.data.data, 
                 formData: response.data.data, //Prefill form with current values 
                 error: null
              });
         } catch (error) {
-            console.log("Error in fetchProduct function", error);
-            set({ error: "Something went wrong", currentProduct: null});
+            console.log("Error in fetchItem function", error);
+            set({ error: "Something went wrong", currentItem: null});
         } finally {
             set({ loading: false });
         }
     },
 
-    updateProduct: async (id) => {
+    updateItem: async (id) => {
         set({loading:true})
         try {
             const {formData} = get();
@@ -118,17 +118,17 @@ export const useProductStore = create((set, get) => ({
             formDataToSend.append("price", formData.price);
             formDataToSend.append("imageFile", formData.image);
 
-            const response = await axios.put(`${BASE_URL}/api/products/${id}`, formDataToSend, {
+            const response = await axios.put(`${BASE_URL}/api/items/${id}`, formDataToSend, {
                 headers: { 
                     "Content-Type": "multipart/form-data",
                     "Authorization": `Bearer ${token}`
                 }
             });
-            set({ currentProduct: response.data.data});
-            toast.success("Product updated successfully");
+            set({ currentItem: response.data.data});
+            toast.success("Item updated successfully");
         } catch (error) {
             toast.error("Something went wrong");
-            console.log("Error in updateProduct function", error);
+            console.log("Error in updateItem function", error);
         } finally {
             set({loading:false});
         }

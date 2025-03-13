@@ -1,44 +1,44 @@
 import React, { useEffect } from 'react';
-import { useProductStore } from '../store/useProductStore.js';
+import { useItemStore } from '../store/useItemStore.js';
 import {PackageIcon, PlusCircleIcon, RefreshCwIcon} from 'lucide-react';
-import ProductCard from '../components/ProductCard.jsx';
-import AddProductModal from '../components/AddProductModal.jsx';
+import ItemCard from '../components/ItemCard.jsx';
+import AddItemModal from '../components/AddItemModal.jsx';
 
 
 function Homepage() {
-  const {products, loading, error, fetchProducts} = useProductStore();
+  const {items, loading, error, fetchItems} = useItemStore();
   
   useEffect(() => {
-    fetchProducts()
-  }, [fetchProducts]);
+    fetchItems()
+  }, [fetchItems]);
 
-  console.log("products", products);
+  console.log("items", items);
 
   return (
     <main className='max-w-6xl mx-auto px-4 py-8'>
       <div className='flex justify-between items-center mb-8'>
-        <button className='flex btn btn-primary' onClick={() => document.getElementById("add_product_modal").showModal()}>
+        <button className='flex btn btn-primary' onClick={() => document.getElementById("add_item_modal").showModal()}>
           <PlusCircleIcon className='size-5 mr-1'/>
           Add Item
         </button>
-        <button className='btn btn-ghost btn-circle' onClick={fetchProducts}>
+        <button className='btn btn-ghost btn-circle' onClick={fetchItems}>
           <RefreshCwIcon className='size-5' />
         </button>
       </div>
 
-      <AddProductModal />
+      <AddItemModal />
 
       {error && <div className='alert alert-error mb-8'>{error}</div>}
 
-      {products.length === 0 && !loading && (
+      {items.length === 0 && !loading && (
         <div className='flex flex-col justify-center items-center h-96 space-y-4'>
           <div className='bg-base-100 rounded-full p-6'>
             <PackageIcon className='size-12' />
           </div>
           <div className='text-center space-y-2'>
-            <h3 className='text-2xl font-semibold'>No products found</h3>
+            <h3 className='text-2xl font-semibold'>No items found</h3>
             <p className='text-gray-500 max-w-sm'>
-              Get started by adding your first product to the inventory
+              Get started by adding your first item to your inventory
             </p>
           </div>
         </div>
@@ -50,8 +50,8 @@ function Homepage() {
         </div>
       ) : (
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {products.map(product => (
-            <ProductCard key={product.id} product={product} />
+          {items.map(item => (
+            <ItemCard key={item.id} item={item} />
           ))}
 
         </div>

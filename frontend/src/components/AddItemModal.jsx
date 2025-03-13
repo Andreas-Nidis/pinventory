@@ -1,26 +1,26 @@
 import React from 'react'
-import { useProductStore } from '../store/useProductStore'
+import { useItemStore } from '../store/useItemStore.js';
 import { DollarSignIcon, ImageIcon, Package2Icon, PlusCircleIcon } from 'lucide-react';
 
-function AddProductModal() {
-    const {addProduct, formData, setFormData, loading} = useProductStore();
+function AddItemModal() {
+    const {addItem, formData, setFormData, loading} = useItemStore();
 
   return (
-    <dialog id='add_product_modal' className='modal'>
+    <dialog id='add_item_modal' className='modal'>
         <div className='modal-box'>
             <form method='dialog'>
                 <button className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>X</button>
             </form>
 
-            <h3 className='font-bold text-xl mb-8'>Add New Product</h3>
+            <h3 className='font-bold text-xl mb-8'>Add New Item</h3>
 
-            <form onSubmit={addProduct} className='space-y-6'>
+            <form onSubmit={addItem} className='space-y-6'>
                 <div className='grid gap-6'>
 
                     {/* Name */}
                     <div className='form-control'>
                         <label className='label'>
-                            <span className='label-text text-base font-medium'>Product Name</span>
+                            <span className='label-text text-base font-medium'>Item Name</span>
                         </label>
                         <div className='relative'>
                             <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/50'>
@@ -28,7 +28,7 @@ function AddProductModal() {
                             </div>
                             <input 
                                 type='text' 
-                                placeholder='Enter product name' 
+                                placeholder='Enter item name' 
                                 className='input input-bordered w-full pl-10 py-3 focus:input-primary transition-colors duration-200' 
                                 value={formData.name} 
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
@@ -91,7 +91,7 @@ function AddProductModal() {
                         ) : (
                             <>
                                 <PlusCircleIcon className='size-5 mr-2' />
-                                Add Product
+                                Add Item
                             </>
                         )}
                     </button>
@@ -107,4 +107,4 @@ function AddProductModal() {
   )
 }
 
-export default AddProductModal
+export default AddItemModal

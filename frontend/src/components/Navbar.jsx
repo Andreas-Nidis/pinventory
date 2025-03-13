@@ -1,13 +1,13 @@
 import React from 'react'
 import { useResolvedPath, useNavigate } from 'react-router-dom';
 import { PackageOpen, SquareStack, LogOutIcon } from "lucide-react";
-import { useProductStore } from '../store/useProductStore';
+import { useItemStore } from '../store/useItemStore.js';
 
 function Navbar() {
   const {pathname} = useResolvedPath();
   const isHomePage = pathname === '/';
   const navigate = useNavigate();
-  const { products } = useProductStore();
+  const { items } = useItemStore();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -42,7 +42,7 @@ function Navbar() {
                     <SquareStack className='size-5'/>
                     <span className='px-2 hidden lg:block'>Items:</span>
                     <div>
-                      <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">{products.length}</span>
+                      <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">{items.length}</span>
                     </div>
                   </div>
                 </div>

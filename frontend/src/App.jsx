@@ -1,7 +1,7 @@
 import Navbar from './components/Navbar.jsx';
 import { Routes, Route, useResolvedPath } from 'react-router-dom';
 import HomePage from './features/HomePage.jsx';
-import ProductPage from './features/ProductPage.jsx';
+import ItemPage from './features/ItemPage.jsx';
 import { Toaster } from 'react-hot-toast';
 import GoogleSignIn from './components/GoogleSignIn.jsx';
 
@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<GoogleSignIn />} />
           <Route path='/' element={<HomePage />} />
-          <Route path='/product/:id' element={<ProductPage />} />
+          <Route path='/item/:id' element={<ItemPage />} />
         </Routes>
 
         <Toaster />

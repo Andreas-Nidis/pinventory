@@ -1,34 +1,34 @@
 import { Link } from 'react-router-dom';
 import { EditIcon, Trash2Icon } from 'lucide-react';
 import React from 'react'
-import { useProductStore } from '../store/useProductStore';
+import { useItemStore } from '../store/useItemStore.js';
 
-function ProductCard({product}) {
-  const { deleteProduct } = useProductStore()
+function ItemCard({item}) {
+  const { deleteItem } = useItemStore()
   return (
     <div className='card bg-base-300 shadow-xl hover:shadow-2xl transition-shadow duration-300'>
 
-      {/* Product Image */}
+      {/* Item Image */}
       <figure className='relative pt-[56.25%]'>
         <img 
-          src={product.image}
-          alt={product.name}
+          src={item.image}
+          alt={item.name}
           className='absolute top-0 left-0 w-full h-full object-cover'
         />
       </figure>
 
       <div className='card-body'>
-        {/* Product Information */}
-        <h2 className='card-title text-lg font-semibold'>{product.name}</h2>
-        <p className='text-2xl font-bold text-primary'>${Number(product.price).toFixed(2)}</p>
+        {/* Item Information */}
+        <h2 className='card-title text-lg font-semibold'>{item.name}</h2>
+        <p className='text-2xl font-bold text-primary'>${Number(item.price).toFixed(2)}</p>
 
         {/* Card Actions */}
         <div className='flex card-actions justify-end'>
-          <Link to={`/product/${product.id}`} className='pr-2 btn btn-sm btn-info btn-outline'>
+          <Link to={`/item/${item.id}`} className='pr-2 btn btn-sm btn-info btn-outline'>
             <EditIcon className='size-5' />
           </Link>
 
-          <button className='btn btn-sm btn-error btn-outline' onClick={() => deleteProduct(product.id)}>
+          <button className='btn btn-sm btn-error btn-outline' onClick={() => deleteItem(item.id)}>
             <Trash2Icon className='size-5' />
           </button>
         </div>
@@ -38,4 +38,4 @@ function ProductCard({product}) {
   )
 }
 
-export default ProductCard
+export default ItemCard

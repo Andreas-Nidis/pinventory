@@ -3,24 +3,24 @@ import { uploadAndGetURL } from "../config/cloudinary.js";
 import { v2 as cloudinary } from "cloudinary";
 
 //CRUD OPERATIONS
-export const getProducts = async (req, res) => {
+export const getItems = async (req, res) => {
     try {
-        const products = await sql`
-            SELECT * FROM products
+        const items = await sql`
+            SELECT * FROM items
             WHERE user_id = ${req.user.sub}
             ORDER BY created_at DESC
         `;
 
-        console.log('fetched products', products);
-        res.status(200).json({success:true, data:products});
+        console.log('fetched items', items);
+        res.status(200).json({success:true, data:items});
 
     } catch (error) {
-        console.log("Error in getProducts function", error);
+        console.log("Error in getItems function", error);
         res.status(500).json({success:false, message:"Internal Server Error"});
     }
 };
 
-export const createProduct = async (req, res) => {
+export const createItem = async (req, res) => {
     const {name, price } = req.body;
     const imageFile  = req.file;
 
@@ -36,52 +36,52 @@ export const createProduct = async (req, res) => {
     console.log("Image url retrieved successfully");
 
     try {
-        const newProduct = await sql`
-            INSERT INTO products(user_id, name, price, image)
+        const newItem = await sql`
+            INSERT INTO items(user_id, name, price, image)
             VALUES (${req.user.sub}, ${name}, ${price}, ${image})
             RETURNING *
         `
 
-        console.log("New product added:", newProduct);
-        res.status(201).json({success:true, data:newProduct[0]});
+        console.log("New item added:", newItem);
+        res.status(201).json({success:true, data:newItem[0]});
 
     } catch (error) {
-        console.log("Error in createProducts function", error);
+        console.log("Error in createItems function", error);
         res.status(500).json({success:false, message:"Internal Server Error"});
     }
 };
 
-export const getProduct = async (req, res) => {
+export const getItem = async (req, res) => {
     const {id} = req.params;
 
     try {
-        const product = await sql`
-            SELECT * FROM products WHERE id=${id} AND user_id=${req.user.sub}
+        const item = await sql`
+            SELECT * FROM items WHERE id=${id} AND user_id=${req.user.sub}
         `;
 
-        if(product.length === 0) {
+        if(item.length === 0) {
             return res.status(404).json({
                 success: false,
-                message: "Product not found",
+                message: "Item not found",
             });
         }
 
-        res.status(200).json({success:true, data: product[0]});
+        res.status(200).json({success:true, data: item[0]});
     } catch (error) {
-        console.log("Error in getProduct function");
+        console.log("Error in getItem function");
         res.status(500).json({success:false, message:"Internal Server Error"});
     }
 
 };
 
-export const updateProduct = async (req, res) => {
+export const updateItem = async (req, res) => {
     const {id} = req.params;
     const {name, price} = req.body;
     let image;
     let newImage;
 
     const storedImage = await sql`
-        SELECT image FROM products WHERE id=${id} AND user_id=${req.user.sub}
+        SELECT image FROM items WHERE id=${id} AND user_id=${req.user.sub}
     `;
 
     if (req.file) {
@@ -125,40 +125,40 @@ export const updateProduct = async (req, res) => {
     console.log("Image url retrieved successfully");
 
     try {
-        const updatedProduct = await sql`
-            UPDATE products
+        const updatedItem = await sql`
+            UPDATE items
             SET name=${name}, price=${price}, image=${image}
             WHERE id=${id} AND user_id=${req.user.sub}
             RETURNING *
         `;
 
-        if(updatedProduct.length === 0) {
+        if(updatedItem.length === 0) {
             return res.status(404).json({
                 success: false,
-                message: "Product not found",
+                message: "Item not found",
             });
         }
 
-        res.status(200).json({ success: true, data: updatedProduct[0] });
+        res.status(200).json({ success: true, data: updatedItem[0] });
 
     } catch (error) {
-        console.log("Error in getProduct function");
+        console.log("Error in getItem function");
         res.status(500).json({success:false, message:"Internal Server Error"});
     }
 
 };
 
-export const deleteProduct = async (req, res) => {
+export const deleteItem = async (req, res) => {
     const { id } = req.params;
     
     try {
-        const product = await sql`SELECT * FROM products WHERE id = ${id} AND user_id = ${req.user.sub}`;
+        const item = await sql`SELECT * FROM items WHERE id = ${id} AND user_id = ${req.user.sub}`;
 
-        if (product.length === 0) {
-            return res.status(404).json({ success: false, message: "Product not found" });
+        if (item.length === 0) {
+            return res.status(404).json({ success: false, message: "Item not found" });
         }
 
-        const imageUrl = product[0].image; // Stored Cloudinary image URL
+        const imageUrl = item[0].image; // Stored Cloudinary image URL
         if (imageUrl) {
             console.log("Deleting from Cloudinary...");
             
@@ -184,23 +184,23 @@ export const deleteProduct = async (req, res) => {
             }
         }
 
-        const deletedProduct = await sql`
-            DELETE FROM products 
+        const deletedItem = await sql`
+            DELETE FROM items 
             WHERE id=${id} AND user_id = ${req.user.sub} 
             RETURNING *
         `;
 
-        if(deletedProduct.length === 0) {
+        if(deletedItem.length === 0) {
             return res.status(404).json({
                 success: false,
-                message: "Product not found",
+                message: "Item not found",
             });
         }
 
-        res.status(200).json({success:true, data: deletedProduct[0]});
+        res.status(200).json({success:true, data: deletedItem[0]});
 
     } catch (error) {
-        console.log("Error in deleteProduct function");
+        console.log("Error in deleteItem function");
         res.status(500).json({success:false, message:"Internal Server Error"});
     }
 

@@ -5,7 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { sql } from "./config/db.js";
 
-import productRoutes from "./routes/productRoutes.js";
+import itemRoutes from "./routes/ItemRoutes.js";
 import userRoute from "./routes/userRoute.js";
 import { aj } from "./lib/arcjet.js";
 
@@ -50,13 +50,13 @@ app.use(async (req, res, next) => {
     };
 });
 
-app.use("/api/products", productRoutes);
+app.use("/api/items", itemRoutes);
 app.use("/api/users", userRoute);
 
 async function initDB() {
     try {
         await sql`
-            CREATE TABLE IF NOT EXISTS products (
+            CREATE TABLE IF NOT EXISTS items (
                 id SERIAL PRIMARY KEY,
                 user_id VARCHAR(255) NOT NULL,
                 name VARCHAR(255) NOT NULL,
