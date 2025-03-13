@@ -29,7 +29,7 @@ function GoogleSignIn() {
         const initializeGoogleSignIn = () => {
             if (window.google) {
                 window.google.accounts.id.initialize({
-                    client_id: import.meta.env.REACT_APP_GOOGLE_CLIENT_ID,
+                    client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
                     callback: handleCredentialResponse,
                     ux_mode: "redirect",
                     redirect_uri: REDIRECT_URI, // Make sure this matches Google Cloud Console
