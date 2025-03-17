@@ -76,6 +76,7 @@ async function initDB() {
 initDB().then(() => {
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}`);
+        console.log(`I am donkey`);
     })
 })
 
