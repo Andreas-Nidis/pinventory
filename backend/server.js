@@ -54,7 +54,7 @@ app.use(async (req, res, next) => {
     };
 });
 
-app.use("/api/items", itemRoutes);
+app.use("/api/products/items", itemRoutes);
 app.use("/api/users", userRoute);
 
 if (process.env.NODE_ENV === "production") {
@@ -89,6 +89,7 @@ async function initDB() {
 initDB().then(() => {
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}`);
+        console.log(`I am donkey`);
     })
 })
 

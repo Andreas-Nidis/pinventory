@@ -37,7 +37,7 @@ export const useItemStore = create((set, get) => ({
             formDataToSend.append("value", formData.value);
             formDataToSend.append("imageFile", formData.image);
 
-            await axios.post(`${BASE_URL}/api/items`, formDataToSend, {
+            await axios.post(`${BASE_URL}/api/products/items`, formDataToSend, {
                 headers: { 
                     "Content-Type": "multipart/form-data",
                     "Authorization": `Bearer ${token}`
@@ -60,7 +60,7 @@ export const useItemStore = create((set, get) => ({
         set({loading:true});
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}/api/items`, {
+            const response = await axios.get(`${BASE_URL}/api/products/items`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             set({items:response.data.data, error:null});
@@ -76,7 +76,7 @@ export const useItemStore = create((set, get) => ({
         set({ loading: true });
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`${BASE_URL}/api/items/${id}`, {
+            await axios.delete(`${BASE_URL}/api/products/items/${id}`, {
                 headers: {"Authorization": `Bearer ${token}`}
             });
             set(prev => ({ items: prev.items.filter(item => item.id !== id)}));
@@ -93,7 +93,7 @@ export const useItemStore = create((set, get) => ({
         set({ loading: true });
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}/api/items/${id}`, {
+            const response = await axios.get(`${BASE_URL}/api/products/items/${id}`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             set({ 
@@ -121,7 +121,7 @@ export const useItemStore = create((set, get) => ({
             formDataToSend.append("value", formData.value);
             formDataToSend.append("imageFile", formData.image);
 
-            const response = await axios.put(`${BASE_URL}/api/items/${id}`, formDataToSend, {
+            const response = await axios.put(`${BASE_URL}/api/products/items/${id}`, formDataToSend, {
                 headers: { 
                     "Content-Type": "multipart/form-data",
                     "Authorization": `Bearer ${token}`
