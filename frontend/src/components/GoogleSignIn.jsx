@@ -38,14 +38,14 @@ function GoogleSignIn() {
         };
 
         const initializeGoogleSignIn = () => {
-            console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
-            console.log(REDIRECT_URI);
+            // console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
+            // console.log(REDIRECT_URI);
             if (window.google) {
                 window.google.accounts.id.initialize({
                     client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
                     callback: handleCredentialResponse,
-                    ux_mode: "redirect",
-                    redirect_uri: REDIRECT_URI,
+                    // ux_mode: "redirect",
+                    // redirect_uri: REDIRECT_URI
                 });
     
                 window.google.accounts.id.renderButton(
