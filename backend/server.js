@@ -50,7 +50,7 @@ app.use(async (req, res, next) => {
     };
 });
 
-app.use("/api/items", itemRoutes);
+app.use("/api/products/items", itemRoutes);
 app.use("/api/users", userRoute);
 
 async function initDB() {
