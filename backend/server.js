@@ -16,27 +16,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const __dirname = path.resolve();
 
-// const allowedOrigins = [
-//     "http://localhost:5173",  // Frontend in development mode
-//     "https://your-app.com",   // Frontend in production mode
-// ];
-
 app.use(express.json()); //Herlps parse incoming data 
-app.use(cors(
-//     {
-//     origin: function (origin, callback) {
-//         if (allowedOrigins.includes(origin) || !origin) {
-//             callback(null, true);
-//         } else {
-//             callback(new Error('Not allowed by CORS'));
-//         }
-//     }
-// }
-)); //Avoid cors errors
+app.use(cors({
+    origin: ['http://localhost:3000', 'https://pern-store-project.onrender.com'],
+})); //Avoid cors errors
 app.use(helmet({
     contentSecurityPolicy: false
 })); //Helmet is a security middleware that helps protect your application by setting HTTP headers.
 app.use(morgan("dev")); //This will log requests
+app.use((req, res, next) => {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+    next();
+  });
 
 //Implementation of arcjet rate-limit to all routes
 app.use(async (req, res, next) => {

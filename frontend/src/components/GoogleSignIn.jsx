@@ -18,7 +18,7 @@ function GoogleSignIn() {
                 id_token: response.credential,
             });
 
-            // console.log('Token received', data.token);
+            console.log('Token received', data.token);
             localStorage.setItem('token', data.token);
             navigate('/');
         } catch (error) {
@@ -43,9 +43,9 @@ function GoogleSignIn() {
             if (window.google) {
                 window.google.accounts.id.initialize({
                     client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-                    callback: handleCredentialResponse,
                     // ux_mode: "redirect",
                     // redirect_uri: REDIRECT_URI
+                    callback: handleCredentialResponse,
                 });
     
                 window.google.accounts.id.renderButton(
