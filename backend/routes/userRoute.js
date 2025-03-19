@@ -7,10 +7,10 @@ dotenv.config();
 import { OAuth2Client } from "google-auth-library";
 
 router.post('/' , async (req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+    res.header("Access-Control-Allow-Origin", "https://pern-store-project.onrender.com");
     res.header('Referrer-Policy', 'no-referrer-when-downgrade');
     
-    const redirectUrl = process.env.NODE_ENV === "production" ? "https://pern-store-project.onrender.com/oauth" : "http://localhost:3000/oauth";
+    const redirectUrl = "https://pern-store-project.onrender.com/oauth";
 
     const oAuth2Client = new OAuth2Client(
         process.env.VITE_GOOGLE_CLIENT_ID, 

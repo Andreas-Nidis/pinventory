@@ -16,7 +16,7 @@ function GoogleSignIn() {
                 id_token: response.credential,
             });
 
-            console.log('Token received', data.token);
+            // console.log('Token received', data.token);
             localStorage.setItem('token', data.token);
             navigate('/');
         } catch (error) {
