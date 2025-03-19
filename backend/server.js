@@ -22,12 +22,11 @@ app.use(cors({
 })); //Avoid cors errors
 app.use(helmet({
     contentSecurityPolicy: false,
-    crossOriginOpenerPolicy: false,
-    crossOriginEmbedderPolicy: false,
 })); //Helmet is a security middleware that helps protect your application by setting HTTP headers.
 app.use(morgan("dev")); //This will log requests
 app.use((req, res, next) => {
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+    res.removeHeader("Cross-Origin-Embedder-Policy");
     next();
   });
 
