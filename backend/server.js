@@ -21,7 +21,9 @@ app.use(cors({
     origin: ['http://localhost:3000', 'https://pern-store-project.onrender.com'],
 })); //Avoid cors errors
 app.use(helmet({
-    contentSecurityPolicy: false
+    contentSecurityPolicy: false,
+    crossOriginOpenerPolicy: false,
+    crossOriginEmbedderPolicy: false,
 })); //Helmet is a security middleware that helps protect your application by setting HTTP headers.
 app.use(morgan("dev")); //This will log requests
 app.use((req, res, next) => {

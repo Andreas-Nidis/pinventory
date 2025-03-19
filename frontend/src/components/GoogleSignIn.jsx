@@ -2,10 +2,10 @@ import React, { useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const REDIRECT_URI =
+const credentialPost =
   import.meta.env.NODE_ENV === "production"
-    ? "https://pern-store-project.onrender.com/login"
-    : "http://localhost:3000/login";
+    ? "https://pern-store-project.onrender.com"
+    : "http://localhost:3000";
 
 function GoogleSignIn() {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ function GoogleSignIn() {
     const handleCredentialResponse = useCallback(async (response) => {
         console.log(response);
         try {
-            const {data} = await axios.post('http://localhost:3000/api/users/oauth', {
+            const {data} = await axios.post(`${credentialPost}/api/users/oauth`, {
                 id_token: response.credential,
             });
 
