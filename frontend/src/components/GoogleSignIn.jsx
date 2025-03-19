@@ -2,10 +2,8 @@ import React, { useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const credentialPost =
-  import.meta.env.NODE_ENV === "production"
-    ? "https://pern-store-project.onrender.com"
-    : "http://localhost:3000";
+const credentialPost = "https://pern-store-project.onrender.com"
+    // : "http://localhost:3000";
 
 function GoogleSignIn() {
     const navigate = useNavigate();
