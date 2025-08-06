@@ -20,3 +20,29 @@ Built for anyone who wants to keep track of what they own and where it is.
 - **Backend:** Node.js, Express, Javascript
 - **Database:** PostgreSQL, Neon
 - **Deployment:** Render
+
+---
+
+## 🧩 Core Features
+
+- ✅ **User Authentication** — Secure login/signup
+- 📦 **Create Items** — Add new items with name, description, estimated value, and picture
+- ✏️ **Edit & Delete** — Easily update or remove items
+- 📊 **Item Totals** — See a visual breakdown of all your possessions and total in the top right corner
+- 💡 **Responsive Design** — Works on desktop and mobile
+
+---
+
+## 📸 Screenshots
+
+### 🔐 Login Page
+
+
+### 📋 Inventory Dashboard
+
+
+### ➕ Add New Item
+
+
+### 🧹 Edit / Delete Items
+
