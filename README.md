@@ -36,14 +36,22 @@ Built for anyone who wants to keep track of what they own and where it is.
 ## 📸 Screenshots
 
 ### 🔐 Login Page
-<img width="1470" height="956" alt="login_page" src="https://github.com/user-attachments/assets/e8577fd9-4837-4945-8874-b1fc60ada1b7" />
+<img width="1470" height="956" alt="login_page" src="https://github.com/user-attachments/assets/0a6dd3b5-8834-4e47-bda7-785bd0be3adb" />
 
-### ➕ Add / Edit / Delete Items
-<img width="1470" height="956" alt="add_edit_delete_items" src="https://github.com/user-attachments/assets/78be68d3-8d2e-48d7-a774-c3d6655458c2" />
 
 ### 📋 Inventory Dashboard
-<img width="1470" height="956" alt="inventory_dashboard" src="https://github.com/user-attachments/assets/09c5f99c-fbbb-4b77-82b5-4b2109090414" />
-~~
-<img width="1470" height="956" alt="inventory_dashboard_1" src="https://github.com/user-attachments/assets/c500a835-0dc1-4ef7-86b1-1bade8c26f06" />
+<img width="1470" height="956" alt="inventory_dashboard" src="https://github.com/user-attachments/assets/a1e59b48-6df4-41c0-95aa-75d1b6f32dd0" />
+
+
+### ➕ Add New Item 
+<img width="1470" height="956" alt="add_edit_delete_items" src="https://github.com/user-attachments/assets/9b7383d5-81fe-4561-a318-bda0a24e8659" />
+
+
+### 🧹 Edit / Delete Items
+<img width="1470" height="956" alt="inventory_dashboard_1" src="https://github.com/user-attachments/assets/77ee59b7-230a-4a62-aab2-19c06aa6a116" />
+
+
+
+
 
 
