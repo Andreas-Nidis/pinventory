@@ -20,6 +20,7 @@ Built for anyone who wants to keep track of what they own and where it is.
 - **Backend:** Node.js, Express, Javascript
 - **Database:** PostgreSQL, Neon
 - **Deployment:** Render
+- **Unit Testing:** Jest
 
 ---
 

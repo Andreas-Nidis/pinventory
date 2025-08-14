@@ -1,7 +1,6 @@
-import * as service from "../service/itemService.js";
+import * as service from "../services/itemService.js";
 import { sql } from "../config/db.js";
 import { uploadAndGetURL } from "../config/cloudinary.js";
-import { v2 as cloudinary } from "cloudinary";
 
 jest.mock("../config/db.js");
 jest.mock("../config/cloudinary.js");
