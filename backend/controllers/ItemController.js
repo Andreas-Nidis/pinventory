@@ -9,10 +9,28 @@ export const getItems = async (req, res) => {
   }
 };
 
+export const getItem = async (req, res) => {
+  try {
+    const item = await itemService.fetchItem(req.user.sub, req.params.id);
+    res.status(200).json({ success: true, data: item });
+  } catch (err) {
+    handleError(res, err);
+  }
+};
+
 export const createItem = async (req, res) => {
   try {
     const newItem = await itemService.addItem(req.user.sub, req.body, req.file);
     res.status(201).json({ success: true, data: newItem });
+  } catch (err) {
+    handleError(res, err);
+  }
+};
+
+export const updateItem = async (req, res) => {
+  try {
+    const updatedItem = await itemService.modifyItem(req.user.sub, req.params.id, req.body, req.file);
+    res.status(200).json({ success: true, data: updatedItem });
   } catch (err) {
     handleError(res, err);
   }

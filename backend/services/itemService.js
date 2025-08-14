@@ -14,6 +14,18 @@ export async function fetchItems(userId) {
   return items;
 }
 
+export async function fetchItem(userId, itemId) {
+  if (!userId) throw new Error("Unauthorized");
+
+  const item = await sql`
+    SELECT * FROM items WHERE id = ${itemId} AND user_id = ${userId}
+  `;
+
+  if (item.length === 0) throw new Error("NotFound");
+
+  return item[0];
+}
+
 export async function addItem(userId, { name, description, value }, file) {
   if (!userId) throw new Error("Unauthorized");
   if (!name || !file) throw new Error("BadRequest");
@@ -29,6 +41,46 @@ export async function addItem(userId, { name, description, value }, file) {
   `;
   
   return newItem[0];
+}
+
+export async function modifyItem(userId, itemId, { name, description, value }, file) {
+  if (!userId) throw new Error("Unauthorized");
+
+  const storedItem = await sql`
+    SELECT * FROM items WHERE id=${itemId} AND user_id=${userId}
+  `;
+
+  if (storedItem.length === 0) throw new Error("NotFound");
+
+  let newImage;
+  if (file) {
+    const fileBase64 = file.buffer.toString("base64");
+    const fileDataUri = `data:${file.mimetype};base64,${fileBase64}`;
+    newImage = await uploadAndGetURL(fileDataUri);
+
+    // Delete old image if different
+    if (newImage !== storedItem[0].image && storedItem[0].image) {
+      const publicId = storedItem[0].image
+        .split("/upload/")[1]
+        .split(".")[0]
+        .split("?")[0];
+
+      await cloudinary.uploader.destroy(publicId);
+    }
+  } else {
+    newImage = storedItem[0].image;
+  }
+
+  const updatedItem = await sql`
+    UPDATE items
+    SET name=${name}, description=${description}, value=${value}, image=${newImage}
+    WHERE id=${itemId} AND user_id=${userId}
+    RETURNING *
+  `;
+
+  if (updatedItem.length === 0) throw new Error("NotFound");
+
+  return updatedItem[0];
 }
 
 export async function removeItem(userId, itemId) {
