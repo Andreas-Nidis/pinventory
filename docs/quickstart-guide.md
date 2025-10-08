@@ -1,8 +1,3 @@
----
-title: "Quick Start Guide: Pinventory"
-description: "Get your inventory management up and running in under 5 minutes."
----
-
 # Quick Start Guide: Pinventory
 
 Welcome to Pinventory! This guide will help you log in, add your first item, and start managing your inventory in just a few steps.
