@@ -58,6 +58,7 @@ You can easily edit or delete any item in your list.
     1. Click the **"Edit"** icon button in the item card of the item you wish to change.
     2. Update the information in the form and click "Save Changes". 
     3. Then click **"Back to Items"** above the form.
+    
 *   **To Delete an Item:** 
     * Click the **"Delete"** icon button in the item card located to the right of the edit icon button. 
         * **Warning!** You will not be asked to confirm your choice, so make sure you are sure before you click the delete button icon.
@@ -65,3 +66,20 @@ You can easily edit or delete any item in your list.
 
 ![A single inventory item in the list, with the 'Edit' and 'Delete' buttons clearly visible.](/docs/images/item-management.png)
 
+
+
+## 5. Logging Out
+
+When you are finished, it's good practice to log out.
+
+1.  Click **"Logout"** at the top right of the navigation bar.
+2.  You will be safely returned to the login screen.
+
+
+
+## What's Next?
+
+*   **Need to solve a problem?** Check out our [Troubleshooting FAQ](./troubleshooting-faq.md).
+
+---
+*This documentation was last updated on [08/10/2025].*
