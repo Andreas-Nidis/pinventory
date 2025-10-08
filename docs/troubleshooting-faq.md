@@ -72,7 +72,7 @@ After making changes in the edit form, you **must** click the **"Save Changes"**
 
 *   **Try accessing the application in a different web browser** (e.g., Chrome, Firefox, Safari) to see if the issue is specific to your current browser.
 
-#### **Found a bug, have a feature request, or still need help?.**
+#### **Found a bug, have a feature request, or still need help?**
 Always welcomed in order to improve Pinventory! If you've found a bug, have an idea for a new feature, or still need help, then please get in touch by [opening an issue on Pinventory's GitHub repository](https://github.com/Andreas-Nidis/pinventory/issues). 
 
 Please provide as much detail as possible.
