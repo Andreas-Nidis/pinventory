@@ -60,3 +60,19 @@ To change an existing item's image:
 
 After making changes in the edit form, you **must** click the **"Save Changes"** button at the bottom of the form. If you navigate away from the page or close the tab before saving, your changes will be lost.
 
+---
+
+### General Application Issues
+
+#### **The page is loading slowly or not responding.**
+
+*   **Check your internet connection.**
+
+*   **Try refreshing the page.** A simple refresh (`F5` or `Cmd + R`) often resolves temporary issues.
+
+*   **Try accessing the application in a different web browser** (e.g., Chrome, Firefox, Safari) to see if the issue is specific to your current browser.
+
+#### **Found a bug, have a feature request, or still need help?.**
+Always welcomed in order to improve Pinventory! If you've found a bug, have an idea for a new feature, or still need help, then please get in touch by [opening an issue on Pinventory's GitHub repository](https://github.com/Andreas-Nidis/pinventory/issues). 
+
+Please provide as much detail as possible.
